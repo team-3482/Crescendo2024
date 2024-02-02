@@ -12,7 +12,9 @@ import frc.robot.Constants.LEDConstants;
 import frc.robot.commands.SwerveDrive;
 import frc.robot.subsystems.SwerveSubsystem;
 import frc.robot.commands.LED;
+import frc.robot.commands.MIDI;
 import frc.robot.subsystems.LEDSubsystem;
+import frc.robot.subsystems.MIDISubsystem;
 
 public class RobotContainer {
   // Singleton design pattern
@@ -33,6 +35,7 @@ public class RobotContainer {
   // Instance of the Subsystems
   private SwerveSubsystem swerveSubsystem;
   private final LEDSubsystem LEDSubsystem = new LEDSubsystem();
+  private final MIDISubsystem MIDISubsystem = new MIDISubsystem();
   // Instance of the controller used to drive the robot
   private CommandXboxController driveController;
 
@@ -64,8 +67,11 @@ public class RobotContainer {
    */
   private void configureBindings() {
     driveController.y().whileTrue(Commands.run(() -> swerveSubsystem.zeroHeading()));
+
     driveController.a().whileTrue(new LED(LEDSubsystem, LEDConstants.redColor));
     driveController.b().whileTrue(new LED(LEDSubsystem, LEDConstants.blueColor));
+
+    driveController.x().whileTrue(new MIDI(MIDISubsystem, "Entry_of_the_Gladiators.mid"));
   }
 
   /**
